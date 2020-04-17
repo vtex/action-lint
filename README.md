@@ -1,6 +1,6 @@
-# VTEX IO test action
+# Lint action
 
-This is a simple Github action that runs the `test` script of IO apps. The action searches for a `manifest.json` in the root of the project and for a `package.json` for each builder the manifest has.
+This is a simple Github action that runs the `lint` script of a project. If the project doesn't have a `package.json` nor a `lint` script, the action is skipped.
 
 ## Usage
 
