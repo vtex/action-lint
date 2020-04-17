@@ -1,5 +1,5 @@
-name: VTEX IO Test Action
-description: Automatically run tests for VTEX IO apps
+name: VTEX Lint action
+description: Optionally run a lint task in the root of a project
 runs:
   using: docker
   image: Dockerfile

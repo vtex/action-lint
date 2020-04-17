@@ -12,19 +12,21 @@ jest.spyOn(Toolkit, 'run').mockImplementation(actionFn => {
 // Load up our entrypoint file
 require('../lib')
 
-beforeEach(() => {
+function mockTools(cwd) {
+  process.env.GITHUB_WORKSPACE = cwd
+
   // Create a new Toolkit instance
   tools = new Toolkit()
+
   // Mock methods on it!
   jest.spyOn(tools.exit, 'success').mockImplementation()
   jest.spyOn(tools.exit, 'failure').mockImplementation()
-})
+  jest.spyOn(tools.log, 'warn').mockImplementation()
+}
 
 // eslint-disable-next-line jest/no-disabled-tests
-describe.skip('success', () => {
-  beforeAll(() => {
-    process.env.GITHUB_WORKSPACE = resolve(__dirname, 'fixtures', 'passing')
-  })
+describe('success', () => {
+  mockTools(resolve(__dirname, 'fixtures', 'correct'))
 
   it('exits successfully', async () => {
     await action(tools)
@@ -32,13 +34,30 @@ describe.skip('success', () => {
   })
 })
 
-describe('failing', () => {
-  beforeAll(() => {
-    process.env.GITHUB_WORKSPACE = resolve(__dirname, 'fixtures', 'failing')
+describe('skipping', () => {
+  it('skips if no package.json is found', async () => {
+    mockTools(resolve(__dirname, 'fixtures', 'no-pkg'))
+    await action(tools)
+    expect(tools.log.warn).toHaveBeenCalledWith(
+      'No "package.json" found in the root directory. Skipping.'
+    )
   })
 
-  it('exits with a exception if some test fails', async () => {
+  it('skips if no lint script is found', async () => {
+    mockTools(resolve(__dirname, 'fixtures', 'no-script'))
     await action(tools)
-    expect(tools.exit.failure).toHaveBeenCalled()
+    expect(tools.log.warn).toHaveBeenCalledWith(
+      'No "lint" script found in the. Skipping.'
+    )
+  })
+
+  it('skips if no lint script object is found', async () => {
+    mockTools(resolve(__dirname, 'fixtures', 'no-script-obj'))
+
+    await action(tools)
+
+    expect(tools.log.warn).toHaveBeenCalledWith(
+      'No "lint" script found in the. Skipping.'
+    )
   })
 })
