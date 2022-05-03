@@ -18,11 +18,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
-      - name: Use Node.js 12.x
-        uses: actions/setup-node@master
+      - uses: actions/checkout@v3
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v3
         with:
-          node-version: 12.x
+          node-version: 16
         env:
           RUNNER_TEMP: /tmp
 
@@ -30,5 +30,5 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Lint project
-        uses: vtex/action-lint@master
+        uses: vtex/action-lint@v2
 ```
