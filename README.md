@@ -15,20 +15,12 @@ on:
     branches: [master]
 
 jobs:
-  build:
+  lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js 16.x
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-        env:
-          RUNNER_TEMP: /tmp
-
-      - name: yarn install
-        run: yarn install --frozen-lockfile
-
-      - name: Lint project
-        uses: vtex/action-lint@v2
+      - name: Checkout
+        uses: actions/checkout@v3
+        
+      - name: Lint
+        uses: vtex/action-lint@v1.1
 ```
