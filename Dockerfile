@@ -8,11 +8,11 @@
 #
 # You can specify a version:
 # FROM node:10-slim
-FROM node:slim
+FROM node:16-slim
 
 # Labels for GitHub to read your action
-LABEL "com.github.actions.name"="VTEX IO Test Action"
-LABEL "com.github.actions.description"="Automatically run tests for VTEX IO apps"
+LABEL "com.github.actions.name"="VTEX IO Lint Action"
+LABEL "com.github.actions.description"="Automatically run lint checks on VTEX IO apps"
 # Here are all of the available icons: https://feathericons.com/
 LABEL "com.github.actions.icon"="code"
 # And all of the available colors: https://developer.github.com/actions/creating-github-actions/creating-a-docker-container/#label
